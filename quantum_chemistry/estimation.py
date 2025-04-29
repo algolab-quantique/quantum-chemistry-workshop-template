@@ -38,19 +38,7 @@ def diagonal_pauli_with_circuit(pauli: PauliString) -> Tuple[PauliString, Quantu
         QuantumCircuit: Circuit which transform the orginal Pauli into the diagonale Pauli
     """
 
-    num_qubits = len(pauli)
-
-    circuit = QuantumCircuit(num_qubits)
-    for i in range(num_qubits):
-        if pauli.x_bits[i]:
-            if pauli.z_bits[i]:
-                circuit.sdg(i)
-            circuit.h(i)
-
-    new_z_bits = np.logical_or(pauli.x_bits, pauli.z_bits)
-    diagonal_pauli = PauliString(new_z_bits, np.zeros_like(new_z_bits))
-
-    return diagonal_pauli, circuit
+    raise NotImplementedError
 
 
 def diagonal_pauli_eigenvalue(pauli: PauliString, bits: NDArray[np.bool]) -> float:
@@ -66,7 +54,7 @@ def diagonal_pauli_eigenvalue(pauli: PauliString, bits: NDArray[np.bool]) -> flo
     """    
     assert np.all(pauli.x_bits == 0)
 
-    return np.prod(np.choose(np.mod(pauli.z_bits * bits, 2), [1, -1]))
+    raise NotImplementedError
 
 
 def diagonal_pauli_expectation_value(pauli: PauliString, counts: dict) -> float:
@@ -84,13 +72,7 @@ def diagonal_pauli_expectation_value(pauli: PauliString, counts: dict) -> float:
 
     assert np.all(~pauli.x_bits)  # is diagonal
 
-    weighted_count = 0
-    total_count = 0
-    for bitstring, count in counts.items():
-        weighted_count += count * diagonal_pauli_eigenvalue(pauli, bitstring_to_bits(bitstring))
-        total_count += count
-
-    return float(weighted_count / total_count)
+    raise NotImplementedError
 
 
 def prepare_estimation_circuits_and_diagonal_paulis(
@@ -108,16 +90,7 @@ def prepare_estimation_circuits_and_diagonal_paulis(
         List[PauliString]: The diagonal Paulis required to compute the expectation values
     """
 
-    diagonal_paulis = list()
-    estimation_circuits = list()
-    for pauli in paulis:
-        diagonal_pauli, diagonalizing_circuit = diagonal_pauli_with_circuit(pauli)
-        diagonal_paulis.append(diagonal_pauli)
-        circuit = state_circuit.copy(str(pauli)).compose(diagonalizing_circuit)
-        circuit.measure_all()
-        estimation_circuits.append(circuit)
-
-    return estimation_circuits, diagonal_paulis
+    raise NotImplementedError
 
 
 def estimate_paulis_expectation_values(
@@ -136,26 +109,11 @@ def estimate_paulis_expectation_values(
         NDArray[np.float64]: The estimated expectation values
     """
 
-    estimation_circuits, diagonal_paulis = prepare_estimation_circuits_and_diagonal_paulis(paulis, state_circuit)
-
-    sampler = Sampler(mode=backend)
-    pass_manager = generate_preset_pass_manager(backend=backend, optimization_level=1)
-    isa_circuits = pass_manager.run(estimation_circuits)
-    job = sampler.run(isa_circuits)
-    results = job.result()
-
-    expectation_values = np.zeros(len(estimation_circuits))
-    for i, diagonal_pauli in enumerate(diagonal_paulis):
-        counts = results[i].data.meas.get_counts()
-        expectation_values[i] = diagonal_pauli_expectation_value(diagonal_pauli, counts)
-
-    return expectation_values
+    raise NotImplementedError
 
 
 def estimate_observable_expectation_value(
     observable: Operator, state_circuit: QuantumCircuit, backend: Backend
 ) -> float:
 
-    paulis_expectation_values = estimate_paulis_expectation_values(observable.paulis, state_circuit, backend)
-
-    return np.sum(observable.coefs * paulis_expectation_values)
+    raise NotImplementedError
