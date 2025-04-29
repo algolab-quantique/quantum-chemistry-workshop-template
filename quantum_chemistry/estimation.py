@@ -54,7 +54,16 @@ def diagonal_pauli_with_circuit(pauli: PauliString) -> Tuple[PauliString, Quantu
 
 
 def diagonal_pauli_eigenvalue(pauli: PauliString, bits: NDArray[np.bool]) -> float:
+    """
+    Computes the eigenvalue of a bitstring for a given Pauli string
 
+    Args:
+        pauli (PauliString): A diagonal pauli string
+        bits (NDArray[np.bool]): basis state bitstring (ex : '1100')
+
+    Returns:
+        float: the eigenvalue corresponding to eigenvector `bits`
+    """    
     assert np.all(pauli.x_bits == 0)
 
     return np.prod(np.choose(np.mod(pauli.z_bits * bits, 2), [1, -1]))
