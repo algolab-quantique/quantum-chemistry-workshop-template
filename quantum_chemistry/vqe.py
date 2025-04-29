@@ -1,7 +1,11 @@
 # %%
+from typing import Callable, Mapping, Iterable
+
 import numpy as np
 from qiskit.circuit import Parameter, QuantumCircuit
+from qiskit.providers import Backend
 
+from quantum_chemistry.pauli import Operator
 from quantum_chemistry.estimation import estimate_observable_expectation_value
 
 
@@ -13,30 +17,21 @@ def h2_ansatz_circuit() -> QuantumCircuit:
         QuantumCircuit: The state circuit ansatz
     """
 
-    param_a = Parameter("a")
-
-    ansatz_circuit = QuantumCircuit(4)
-    ansatz_circuit.x(0)
-    ansatz_circuit.ry(param_a, 1)
-    ansatz_circuit.cx(1, 0)
-    ansatz_circuit.cx(0, 2)
-    ansatz_circuit.cx(1, 3)
-
-    return ansatz_circuit
+    raise NotImplementedError
 
 
-def minimize_expectation_value(hamiltonian, ansatz_circuit, backend, minimizer, starting_params=None):
+def minimize_expectation_value(hamiltonian: Operator, ansatz_circuit: QuantumCircuit, backend: Backend, minimizer: Callable, starting_params: Mapping[Parameter:] | Iterable = None):
+    """_summary_
 
-    def cost_function(params):
-
-        state_circuit = ansatz_circuit.assign_parameters(params)
-        hamiltonian_expectation_value = estimate_observable_expectation_value(hamiltonian, state_circuit, backend)
-
-        return hamiltonian_expectation_value.real
-
-    if starting_params is None:
-        starting_params = np.zeros(len(ansatz_circuit.parameters))
-
-    minimization_result = minimizer(cost_function, starting_params)
-
-    return minimization_result
+    Args:
+        hamiltonian (Operator): Hamiltonian from which to get the expectation values
+        ansatz_circuit (QuantumCircuit): Circuit that prepare the variational ansatz
+        backend (Backend): The backend on which the circuits will be executed 
+        minimizer (Callable): Classical optimizer that will be called as `minimizer(cost_function, starting_params)`
+        starting_params (_type_, optional): Initial values of the parameters passed to optimizer. Defaults to None.
+    
+    Returns:
+        results (Any): Results from the minimization (ex: scipy.minimize Results object)
+    
+    """
+    raise NotImplementedError
