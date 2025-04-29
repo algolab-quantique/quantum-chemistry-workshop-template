@@ -20,11 +20,12 @@ def creation_annihilation_operators_with_jordan_wigner(num_states: int) -> Tuple
     creation_operators = []
     annihilation_operators = []
 
-    for i in range(num_states):
-        x_str = "I" * (num_states - i - 1) + "X" + "Z" * i  # III..X..ZZ
-        y_str = "I" * (num_states - i - 1) + "Y" + "Z" * i  # III..X..ZZ
-        creation_operators.append(0.5 * PauliString.from_str(x_str) - 0.5j * PauliString.from_str(y_str))
-        annihilation_operators.append(0.5 * PauliString.from_str(x_str) + 0.5j * PauliString.from_str(y_str))
+    ################################################################################################################
+    # YOUR CODE HERE
+    # TO COMPLETE
+    ################################################################################################################
+
+    raise NotImplementedError
 
     return creation_operators, annihilation_operators
 
@@ -46,14 +47,7 @@ def build_one_body_qubit_hamiltonian(
         Operator: The one body Hamiltonian as a sum of Pauli strings
     """
 
-    num_qubits = one_body.shape[0]
-
-    one_body_qubit_hamiltonian = 0 * PauliString.from_str("I" * num_qubits)
-
-    for idx in np.ndindex(one_body.shape):
-        one_body_qubit_hamiltonian += float(one_body[idx]) * creation_operators[idx[0]] * annihilation_operators[idx[1]]
-
-    return one_body_qubit_hamiltonian
+    raise NotImplementedError
 
 
 def build_two_body_qubit_hamiltonian(
@@ -73,20 +67,7 @@ def build_two_body_qubit_hamiltonian(
         Operator: The two body Hamiltonian as a sum of Pauli strings
     """
 
-    num_qubits = two_body.shape[0]
-
-    two_body_qubit_hamiltonian = 0 * PauliString.from_str("I" * num_qubits)
-
-    for idx in np.ndindex(two_body.shape):
-        two_body_qubit_hamiltonian += (
-            float(two_body[idx])
-            * creation_operators[idx[0]]
-            * creation_operators[idx[1]]
-            * annihilation_operators[idx[2]]
-            * annihilation_operators[idx[3]]
-        )
-
-    return two_body_qubit_hamiltonian
+    raise NotImplementedError
 
 
 def build_qubit_hamiltonian(
@@ -108,9 +89,4 @@ def build_qubit_hamiltonian(
         Operator: The total Hamiltonian as a sum of Pauli strings
     """
 
-    one_body_ham = build_one_body_qubit_hamiltonian(one_body, creation_operators, annihilation_operators)
-    two_body_ham = build_two_body_qubit_hamiltonian(two_body, creation_operators, annihilation_operators)
-
-    qubit_hamiltonian = (one_body_ham + 0.5 * two_body_ham).simplify().sort()
-
-    return qubit_hamiltonian
+    raise NotImplementedError
