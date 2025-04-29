@@ -103,7 +103,6 @@ def estimate_paulis_expectation_values(
         paulis (List[PauliString]): An ensemble on Pauli string
         state_circuit (QuantumCircuit): A quantum circuit which prepare a quantum state
         backend (Backend): The backend on which the circuits will be executed
-        execute_opts (dict, optional): Execution options, will be passed to the execute function.
 
     Returns:
         NDArray[np.float64]: The estimated expectation values
@@ -115,5 +114,14 @@ def estimate_paulis_expectation_values(
 def estimate_observable_expectation_value(
     observable: Operator, state_circuit: QuantumCircuit, backend: Backend
 ) -> float:
+    """Estimates the expectation values of an operator for a given quantum state
 
+    Args:
+        observable (Operator): Operator from which to take the expectation
+        state_circuit (QuantumCircuit): Circuit to prepare the state in which to take the expectation
+        backend (Backend): The backend on which the circuits will be executed
+
+    Returns:
+        float: The estimated expectation value
+    """
     raise NotImplementedError
