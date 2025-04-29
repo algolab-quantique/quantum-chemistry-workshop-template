@@ -173,7 +173,7 @@ class PauliString:
         # TO COMPLETE
         ################################################################################################################
 
-        return Operator([other], [self])
+        raise NotImplementedError
 
     def to_matrix(self):
         """
@@ -357,10 +357,8 @@ class Operator:
         # new_pauli_strings =
         ################################################################################################################
 
-        coefs = np.concat((self.coefs, other.coefs))
-        paulis = np.concat((self.paulis, other.paulis))
+        raise NotImplementedError
 
-        return Operator(coefs, paulis)
 
     def mul_operator(self, other: Self):
         """
@@ -382,15 +380,8 @@ class Operator:
         # TO COMPLETE
         ################################################################################################################
 
-        paulis = []
-        coefs = []
-        for coef1, pauli1 in zip(self.coefs, self.paulis):
-            for coef2, pauli2 in zip(other.coefs, other.paulis):
-                pauli, w = pauli1 * pauli2
-                paulis.append(pauli)
-                coefs.append(coef1 * coef2 * w)
+        raise NotImplementedError
 
-        return Operator(coefs, paulis)
 
     def mul_coef(self, other: Number):
         """
@@ -474,17 +465,8 @@ class Operator:
         # hint : make use to_zx_bits and np.unique
         ################################################################################################################
 
-        coefs = []
-        paulis = []
-        pstrs_strs = []
-        self_pstrs_strs = np.array([str(pauli) for pauli in self.paulis])
-        for pauli in self.paulis:
-            if not str(pauli) in pstrs_strs:
-                pstrs_strs.append(str(pauli))
-                paulis.append(pauli)
-                coefs.append(self.coefs[np.argwhere(self_pstrs_strs == str(pauli))].sum())
+        raise NotImplementedError
 
-        return Operator(coefs, paulis)
 
     def apply_threshold(self, threshold: float = 1e-9):
         """
@@ -504,13 +486,8 @@ class Operator:
         # Hint : create a np.array<bool> and use this array to get the subset of the Operator where this array is True
         ################################################################################################################
 
-        coefs = []
-        paulis = []
-        for coef, pauli in zip(self.coefs, self.paulis):
-            if np.abs(coef) > threshold:
-                coefs.append(coef)
-                paulis.append(pauli)
-        return Operator(coefs, paulis)
+        raise NotImplementedError
+
 
     def simplify(self, threshold: float = 1e-9):
         """
@@ -557,11 +534,8 @@ class Operator:
         # Hints : sum all the matrices of all PauliStrings weighted by their coef
         ################################################################################################################
 
-        dim = 2 ** len(self.paulis[0])
-        out = np.zeros((dim, dim), dtype=np.complex128)
-        for coef, pauli in zip(self.coefs, self.paulis):
-            out += coef * pauli.to_matrix()
-        return out
+        raise NotImplementedError
+
 
     def adjoint(self):
         """
