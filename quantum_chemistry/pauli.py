@@ -94,7 +94,7 @@ class PauliString:
         # TO COMPLETE
         ################################################################################################################
 
-        return np.concat([self.z_bits, self.x_bits])
+        raise NotImplementedError
 
     def to_xz_bits(self):
         """
@@ -110,7 +110,7 @@ class PauliString:
         # TO COMPLETE
         ################################################################################################################
 
-        return np.concat([self.x_bits, self.z_bits])
+        raise NotImplementedError
 
     def ids(self):
         """
@@ -125,7 +125,7 @@ class PauliString:
         # TO COMPLETE
         ################################################################################################################
 
-        return np.logical_not(np.logical_or(self.x_bits, self.z_bits))
+        raise NotImplementedError
 
     def mul_pauli_string(self, other: Self):
         """
@@ -150,15 +150,10 @@ class PauliString:
         # phase = (-1j)**w
         ################################################################################################################
 
-        new_z_bits = np.logical_xor(self.z_bits, other.z_bits)
-        new_x_bits = np.logical_xor(self.x_bits, other.x_bits)
-        w = (
-            2 * np.sum(self.x_bits * other.z_bits)
-            + np.sum(self.z_bits * self.x_bits)
-            + np.sum(other.x_bits * other.z_bits)
-            - np.sum(new_z_bits * new_x_bits)
-        )
-        phase_factor = (-1j) ** w
+        raise NotImplementedError
+        new_z_bits =
+        new_x_bits =
+        phase_factor =
 
         return PauliString(new_z_bits, new_x_bits), phase_factor
 
@@ -193,19 +188,7 @@ class PauliString:
         # TO COMPLETE
         ################################################################################################################
 
-        pauli_string_labels_list = np.array(list(str(self)))
-        out = 1
-        for pmat in pauli_string_labels_list:
-            match str(pmat):
-                case "I":
-                    out = np.kron(out, PAULI_I)
-                case "X":
-                    out = np.kron(out, PAULI_X)
-                case "Y":
-                    out = np.kron(out, PAULI_Y)
-                case "Z":
-                    out = np.kron(out, PAULI_Z)
-        return out
+        raise NotImplementedError
 
     @classmethod
     def from_str(cls, pauli_str: str):
@@ -223,11 +206,8 @@ class PauliString:
         # YOUR CODE HERE
         # TO COMPLETE
         ################################################################################################################
-
-        char_array = np.array(list(reversed(pauli_str)))
-        z_bits = np.logical_or(char_array == "Z", char_array == "Y")
-        x_bits = np.logical_or(char_array == "X", char_array == "Y")
-
+        raise NotImplementedError
+    
         return cls(z_bits, x_bits)
 
 
@@ -447,8 +427,7 @@ class Operator:
         # YOUR CODE HERE
         # TO COMPLETE
         ################################################################################################################
-
-        return np.stack([pauli.to_zx_bits() for pauli in self.paulis])
+        raise NotImplementedError
 
     def to_xz_bits(self):  # remove?
         """
