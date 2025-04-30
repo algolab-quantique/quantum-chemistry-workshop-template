@@ -47,10 +47,10 @@ def diagonal_pauli_eigenvalue(pauli: PauliString, bits: NDArray[np.bool]) -> flo
 
     Args:
         pauli (PauliString): A diagonal pauli string
-        bits (NDArray[np.bool]): basis state bitstring (ex : '1100')
+        bits (NDArray[np.bool]): Basis state bitstring (ex : '1100')
 
     Returns:
-        float: the eigenvalue corresponding to eigenvector `bits`
+        float: The eigenvalue corresponding to eigenvector `bits`
     """    
     assert np.all(pauli.x_bits == 0)
 
@@ -63,8 +63,8 @@ def diagonal_pauli_expectation_value(pauli: PauliString, counts: dict) -> float:
 
     Args:
         pauli (PauliString): A diagonal Pauli string
-        counts (dict): Keys : basis state bitstring (ex : '1100'),
-                       Values : number of times this state was obtained
+        counts (dict): Keys : Basis state bitstring (ex : '1100'),
+                       Values : Number of times this state was obtained
 
     Returns:
         float: The expectation value
